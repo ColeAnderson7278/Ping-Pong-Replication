@@ -72,10 +72,14 @@ function onSignIn() {
             return response.json();
         })
         .then(function(newJson) {
-            pageData.username = username;
-            pageData.token = newJson.token;
-            getUsers();
-            showHome();
+            if (newJson.token) {
+                pageData.username = username;
+                pageData.token = newJson.token;
+                getUsers();
+                showHome();
+            } else {
+                alert("Please check your inputs");
+            }
         });
 }
 
@@ -96,10 +100,14 @@ function onLogin() {
             return response.json();
         })
         .then(function(newJson) {
-            pageData.username = username;
-            pageData.token = newJson.token;
-            getUsers();
-            showHome();
+            if (newJson.token) {
+                pageData.username = username;
+                pageData.token = newJson.token;
+                getUsers();
+                showHome();
+            } else {
+                alert("Please check your inputs");
+            }
         });
 }
 
@@ -109,13 +117,9 @@ function getUsers() {
         headers: {
             Authorization: `Token ${pageData.token}`
         }
-    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(newJson) {
-            console.log(newJson);
-        });
+    }).then(function(response) {
+        return response.json();
+    });
 }
 
 function showHome() {
@@ -159,10 +163,10 @@ function showScoreGame() {
         setScoreGame: "Score Game",
         ref: `${pageData.username}`,
         scoreMessage: "Score:",
-        playerOne: "Player 1 Name",
+        playerOne: `${pageData.playerOneName}`,
         playerOneScore: `${pageData.playerOneScore}`,
         scoreButtonText: "+1",
-        playerTwo: "Player 2 Name",
+        playerTwo: `${pageData.playerTwoName}`,
         playerTwoScore: `${pageData.playerTwoScore}`,
         scoreButtonText2: "+1"
     });
@@ -173,7 +177,10 @@ function showScoreGame() {
 
 function showGamePlay() {
     var newGameButton = document.getElementById("startGameButton");
-    newGameButton.addEventListener("click", showScoreGame);
+    newGameButton.addEventListener("click", function() {
+        setPlayerNames();
+        showScoreGame();
+    });
 }
 
 function listenForPoint() {
@@ -196,7 +203,6 @@ function playerInputListen() {
 function playerInputCheck() {
     var playerOneInput = document.querySelector("#playerOneSelect").value;
     var playerTwoInput = document.querySelector("#playerTwoSelect").value;
-    console.log(playerOneInput, playerTwoInput);
     if (playerOneInput !== "" && playerTwoInput !== "") {
         document
             .querySelector("#startGameButton")
@@ -209,7 +215,9 @@ function playerInputCheck() {
 }
 
 function singUpListen() {
-    document.addEventListener("mouseover", signUpCheck);
+    document
+        .querySelector(".signupContainer")
+        .addEventListener("mouseover", signUpCheck);
 }
 
 function signUpCheck() {
@@ -229,7 +237,9 @@ function signUpCheck() {
 }
 
 function loginListen() {
-    document.addEventListener("mouseover", loginCheck);
+    document
+        .querySelector(".loginContainer")
+        .addEventListener("mouseover", loginCheck);
 }
 
 function loginCheck() {
@@ -241,4 +251,9 @@ function loginCheck() {
     } else {
         submitButton.setAttribute("disabled", "disabled");
     }
+}
+
+function setPlayerNames() {
+    pageData.playerOneName = document.querySelector("#playerOneSelect").value;
+    pageData.playerTwoName = document.querySelector("#playerTwoSelect").value;
 }
