@@ -1,4 +1,13 @@
-var pageData = { playerOneScore: 0, playerTwoScore: 0 };
+var pageData = {
+    username: null,
+    playerOneName: null,
+    playerOneScore: 0,
+    playerTwoName: null,
+    playerTwoScore: 0,
+    token: null,
+    users: null,
+    usernames: null
+};
 
 function listenForSignUp() {
     var signUpLink = document.querySelector("#SignUpLink");
@@ -11,7 +20,7 @@ listenForSignUp();
 function showSignUpPage() {
     var source = document.getElementById("showSignUp").innerHTML;
     var template = Handlebars.compile(source);
-    content = template({
+    var content = template({
         username: "Username:",
         password: "Password:",
         passwordConfirm: "Password Confirmation:",
@@ -19,7 +28,7 @@ function showSignUpPage() {
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
-    button = document.querySelector("#signupButton");
+    var button = document.querySelector("#signupButton");
     singUpListen();
     button.addEventListener("click", function(event) {
         event.preventDefault();
@@ -75,7 +84,6 @@ function onSignIn() {
             if (newJson.token) {
                 pageData.username = username;
                 pageData.token = newJson.token;
-                getUsers();
                 showHome();
             } else {
                 alert("Please check your inputs");
@@ -103,23 +111,11 @@ function onLogin() {
             if (newJson.token) {
                 pageData.username = username;
                 pageData.token = newJson.token;
-                getUsers();
                 showHome();
             } else {
                 alert("Please check your inputs");
             }
         });
-}
-
-function getUsers() {
-    fetch("https://bcca-pingpong.herokuapp.com/api/users/", {
-        method: "GET",
-        headers: {
-            Authorization: `Token ${pageData.token}`
-        }
-    }).then(function(response) {
-        return response.json();
-    });
 }
 
 function showHome() {
@@ -147,8 +143,11 @@ function showSetGame() {
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
-    playerInputListen();
+    // playerInputListen();
     showGamePlay();
+    document
+        .querySelector(".setUpContainer")
+        .addEventListener("mouseover", userValidation);
 }
 
 function showGameStart() {
@@ -159,7 +158,7 @@ function showGameStart() {
 function showScoreGame() {
     var source = document.getElementById("showScoreGame").innerHTML;
     var template = Handlebars.compile(source);
-    content = template({
+    var content = template({
         setScoreGame: "Score Game",
         ref: `${pageData.username}`,
         scoreMessage: "Score:",
@@ -204,9 +203,7 @@ function playerInputCheck() {
     var playerOneInput = document.querySelector("#playerOneSelect").value;
     var playerTwoInput = document.querySelector("#playerTwoSelect").value;
     if (playerOneInput !== "" && playerTwoInput !== "") {
-        document
-            .querySelector("#startGameButton")
-            .removeAttribute("disabled", "disabled");
+        document.querySelector("#startGameButton").removeAttribute("disabled");
     } else {
         document
             .querySelector("#startGameButton")
@@ -230,7 +227,7 @@ function signUpCheck() {
         password.value != "" &&
         passwordRepeat.value != ""
     ) {
-        submitButton.removeAttribute("disabled", "disabled");
+        submitButton.removeAttribute("disabled");
     } else {
         submitButton.setAttribute("disabled", "disabled");
     }
@@ -247,7 +244,7 @@ function loginCheck() {
     var password = document.querySelector("#existingPassword");
     var submitButton = document.querySelector("#loginButton");
     if (username.value != "" && password.value != "") {
-        submitButton.removeAttribute("disabled", "disabled");
+        submitButton.removeAttribute("disabled");
     } else {
         submitButton.setAttribute("disabled", "disabled");
     }
@@ -256,4 +253,36 @@ function loginCheck() {
 function setPlayerNames() {
     pageData.playerOneName = document.querySelector("#playerOneSelect").value;
     pageData.playerTwoName = document.querySelector("#playerTwoSelect").value;
+}
+
+function getUsers() {
+    return fetch("https://bcca-pingpong.herokuapp.com/api/users/", {
+        method: "GET",
+        headers: {
+            Authorization: `Token ${pageData.token}`
+        }
+    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(obj) {
+            return (pageData.users = obj);
+        });
+}
+
+function userValidation() {
+    var startButton = document.querySelector("#startGameButton");
+    var inputOne = document.querySelector("#playerOneSelect").value;
+    var inputTwo = document.querySelector("#playerTwoSelect").value;
+    getUsers().then(function() {
+        usernameList = [];
+        for (var user of pageData.users) {
+            usernameList.push(user.username);
+        }
+        if (inputOne in usernameList && inputTwo in usernameList) {
+            startButton.removeAttribute("disabled");
+        } else {
+            startButton.setAttribute("disabled", "disabled");
+        }
+    });
 }
