@@ -1,4 +1,4 @@
-var pageData = {};
+var pageData = { playerOneScore: 0, playerTwoScore: 0 };
 
 function listenForSignUp(pageData) {
     var signUpLink = document.querySelector("#SignUpLink");
@@ -129,7 +129,7 @@ function showHome(pageData) {
     showGameStart();
 }
 
-function showPlayGame() {
+function showSetGame() {
     var source = document.getElementById("showGameSet").innerHTML;
     var template = Handlebars.compile(source);
     content = template({
@@ -146,10 +146,8 @@ function showPlayGame() {
 
 function showGameStart() {
     var newGameButton = document.getElementById("startNewGame");
-    newGameButton.addEventListener("click", showPlayGame);
+    newGameButton.addEventListener("click", showSetGame);
 }
-
-// showPlayGame();
 
 function showScoreGame() {
     var source = document.getElementById("showScoreGame").innerHTML;
@@ -157,18 +155,33 @@ function showScoreGame() {
     content = template({
         setScoreGame: "Score Game",
         ref: `${pageData.username}`,
+        scoreMessage: "Score:",
         playerOne: "Player 1 Name",
-        playerOneScore: "Score: 0",
+        playerOneScore: `${pageData.playerOneScore}`,
         scoreButtonText: "+1",
         playerTwo: "Player 2 Name",
-        playerTwoScore: "Score: 0",
+        playerTwoScore: `${pageData.playerTwoScore}`,
         scoreButtonText2: "+1"
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
+    listenForPoint();
 }
 
 function showGamePlay() {
     var newGameButton = document.getElementById("startGame");
     newGameButton.addEventListener("click", showScoreGame);
+}
+
+function listenForPoint() {
+    var buttonOne = document.querySelector("#playerOneButton");
+    var buttonTwo = document.querySelector("#playerTwoButton");
+    buttonOne.addEventListener("click", function() {
+        pageData.playerOneScore = pageData.playerOneScore + 1;
+        showScoreGame();
+    });
+    buttonTwo.addEventListener("click", function() {
+        pageData.playerTwoScore = pageData.playerTwoScore + 1;
+        showScoreGame();
+    });
 }
