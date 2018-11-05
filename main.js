@@ -141,47 +141,69 @@ function showSetGame() {
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
-    showGamePlay();
+    playerInputListen();
+    // showGamePlay();
 }
 
-function showGameStart() {
-    var newGameButton = document.getElementById("startNewGame");
-    newGameButton.addEventListener("click", showSetGame);
+showSetGame();
+
+// function showGameStart() {
+//     var newGameButton = document.getElementById("startNewGame");
+//     newGameButton.addEventListener("click", showSetGame);
+// }
+
+// function showScoreGame() {
+//     var source = document.getElementById("showScoreGame").innerHTML;
+//     var template = Handlebars.compile(source);
+//     content = template({
+//         setScoreGame: "Score Game",
+//         ref: `${pageData.username}`,
+//         scoreMessage: "Score:",
+//         playerOne: "Player 1 Name",
+//         playerOneScore: `${pageData.playerOneScore}`,
+//         scoreButtonText: "+1",
+//         playerTwo: "Player 2 Name",
+//         playerTwoScore: `${pageData.playerTwoScore}`,
+//         scoreButtonText2: "+1"
+//     });
+//     var place = document.querySelector("#script-placement");
+//     place.innerHTML = content;
+//     listenForPoint();
+// }
+
+// function showGamePlay() {
+//     var newGameButton = document.getElementById("startGame");
+//     newGameButton.addEventListener("click", showScoreGame);
+// }
+
+// function listenForPoint() {
+//     var buttonOne = document.querySelector("#playerOneButton");
+//     var buttonTwo = document.querySelector("#playerTwoButton");
+//     buttonOne.addEventListener("click", function() {
+//         pageData.playerOneScore = pageData.playerOneScore + 1;
+//         showScoreGame();
+//     });
+//     buttonTwo.addEventListener("click", function() {
+//         pageData.playerTwoScore = pageData.playerTwoScore + 1;
+//         showScoreGame();
+//     });
+// }
+
+function playerInputListen() {
+    document.addEventListener("mouseover", playerInputCheck);
 }
 
-function showScoreGame() {
-    var source = document.getElementById("showScoreGame").innerHTML;
-    var template = Handlebars.compile(source);
-    content = template({
-        setScoreGame: "Score Game",
-        ref: `${pageData.username}`,
-        scoreMessage: "Score:",
-        playerOne: "Player 1 Name",
-        playerOneScore: `${pageData.playerOneScore}`,
-        scoreButtonText: "+1",
-        playerTwo: "Player 2 Name",
-        playerTwoScore: `${pageData.playerTwoScore}`,
-        scoreButtonText2: "+1"
-    });
-    var place = document.querySelector("#script-placement");
-    place.innerHTML = content;
-    listenForPoint();
-}
-
-function showGamePlay() {
-    var newGameButton = document.getElementById("startGame");
-    newGameButton.addEventListener("click", showScoreGame);
-}
-
-function listenForPoint() {
-    var buttonOne = document.querySelector("#playerOneButton");
-    var buttonTwo = document.querySelector("#playerTwoButton");
-    buttonOne.addEventListener("click", function() {
-        pageData.playerOneScore = pageData.playerOneScore + 1;
-        showScoreGame();
-    });
-    buttonTwo.addEventListener("click", function() {
-        pageData.playerTwoScore = pageData.playerTwoScore + 1;
-        showScoreGame();
-    });
+function playerInputCheck() {
+    var playerOneInput = document.querySelector("#playerOneSelect").value;
+    var playerTwoInput = document.querySelector("#playerTwoSelect").value;
+    console.log(playerOneInput, playerTwoInput);
+    if (playerOneInput !== "" && playerTwoInput !== "") {
+        document
+            .querySelector("#startGameButton")
+            .removeAttribute("disabled", "disabled");
+    } else {
+        document
+            .querySelector("#startGameButton")
+            .setAttribute("disabled", "disabled");
+    }
 }
