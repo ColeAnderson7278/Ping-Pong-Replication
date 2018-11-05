@@ -45,11 +45,11 @@
         <form method="POST">
             <div class="form-group ">
                 <label class="fancy-font">{{username}}</label>
-                <input type="text" class="form-control col-4" id="existingUsername" placeholder="Enter your username">
+                <input type="text" class="form-control col-4" id="existingUsername" placeholder="Enter your username" required>
             </div>
             <div class="form-group ">
                 <label class="fancy-font">{{password}}</label>
-                <input type="password" class="form-control col-4" id="existingPassword" placeholder="Enter your password">
+                <input type="password" class="form-control col-4" id="existingPassword" placeholder="Enter your password" required>
             </div>
             <button id="loginButton" type="submit" class="btn btn-success pt-2 fancy-font">{{buttonMessage}}</button>
         </form>
@@ -72,7 +72,7 @@
                     <input type="password" class="form-control col-4" id="inputPasswordRepeat" placeholder="Repeat your password"
                         required>
                 </div>
-                <button id="signupButton" type="submit" class="btn btn-success pt-2 fancy-font">{{buttonMessage}}</button>
+                <button id="signupButton" type="button" class="btn btn-success pt-2 fancy-font">{{buttonMessage}}</button>
             </form>
         </div>
     </script>
