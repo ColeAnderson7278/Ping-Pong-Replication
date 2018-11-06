@@ -143,11 +143,10 @@ function showSetGame() {
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
-    // playerInputListen();
     showGamePlay();
     document
         .querySelector(".setUpContainer")
-        .addEventListener("mouseover", userValidation);
+        .addEventListener("input", userValidation);
 }
 
 function showGameStart() {
@@ -195,21 +194,21 @@ function listenForPoint() {
     });
 }
 
-function playerInputListen() {
-    document.addEventListener("mouseover", playerInputCheck);
-}
+// function playerInputListen() {
+//     document.addEventListener("mouseover", playerInputCheck);
+// }
 
-function playerInputCheck() {
-    var playerOneInput = document.querySelector("#playerOneSelect").value;
-    var playerTwoInput = document.querySelector("#playerTwoSelect").value;
-    if (playerOneInput !== "" && playerTwoInput !== "") {
-        document.querySelector("#startGameButton").removeAttribute("disabled");
-    } else {
-        document
-            .querySelector("#startGameButton")
-            .setAttribute("disabled", "disabled");
-    }
-}
+// function playerInputCheck() {
+//     var playerOneInput = document.querySelector("#playerOneSelect").value;
+//     var playerTwoInput = document.querySelector("#playerTwoSelect").value;
+//     if (playerOneInput !== "" && playerTwoInput !== "") {
+//         document.querySelector("#startGameButton").removeAttribute("disabled");
+//     } else {
+//         document
+//             .querySelector("#startGameButton")
+//             .setAttribute("disabled", "disabled");
+//     }
+// }
 
 function singUpListen() {
     document
@@ -279,8 +278,13 @@ function userValidation() {
         for (var user of pageData.users) {
             usernameList.push(user.username);
         }
-        if (inputOne in usernameList && inputTwo in usernameList) {
-            startButton.removeAttribute("disabled");
+        if (
+            usernameList.includes(inputOne) &&
+            usernameList.includes(inputTwo)
+        ) {
+            if (inputOne != inputTwo) {
+                startButton.removeAttribute("disabled");
+            }
         } else {
             startButton.setAttribute("disabled", "disabled");
         }
