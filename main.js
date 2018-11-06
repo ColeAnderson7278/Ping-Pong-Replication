@@ -2,8 +2,10 @@ var pageData = {
     username: null,
     playerOneName: null,
     playerOneScore: 0,
+    playerOneId: null,
     playerTwoName: null,
     playerTwoScore: 0,
+    playerTwoId: null,
     token: null,
     users: null
 };
@@ -130,6 +132,11 @@ function showHome() {
     showGameStart();
 }
 
+function showGameStart() {
+    var newGameButton = document.getElementById("startNewGame");
+    newGameButton.addEventListener("click", showSetGame);
+}
+
 function showSetGame() {
     var source = document.getElementById("showGameSet").innerHTML;
     var template = Handlebars.compile(source);
@@ -146,11 +153,6 @@ function showSetGame() {
     document
         .querySelector(".setUpContainer")
         .addEventListener("input", userValidation);
-}
-
-function showGameStart() {
-    var newGameButton = document.getElementById("startNewGame");
-    newGameButton.addEventListener("click", showSetGame);
 }
 
 function showScoreGame() {
@@ -177,8 +179,29 @@ function showGamePlay() {
     var newGameButton = document.getElementById("startGameButton");
     newGameButton.addEventListener("click", function() {
         setPlayerNames();
+        getPlayerId(pageData.playerOneName, pageData.playerTwoName);
         showScoreGame();
     });
+}
+
+function getNewGame(IdOne, IdTwo) {
+    return fetch(`http://bcca-pingpong.herokuapp.com/api/new-game/`, {
+        method: "POST",
+        headers: {
+            Authorization: `Token ${pageData.token}`,
+            "Content-Type": "application/json; charset=utf8"
+        },
+        body: JSON.stringify({
+            player_1: IdOne,
+            player_2: IdTwo
+        })
+    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(obj) {
+            return (pageData.gameId = obj.id);
+        });
 }
 
 function listenForPlus() {
@@ -281,6 +304,20 @@ function verifyUsers(usernameList) {
     }
 }
 
+function getPlayerId(nameOne, nameTwo) {
+    getUsers().then(function() {
+        userId = [];
+        for (var user of pageData.users) {
+            if (nameOne == user.username) {
+                userId.push(user.id);
+            } else if (nameTwo == user.username) {
+                userId.push(user.id);
+            }
+        }
+        getNewGame(userId[0], userId[1]);
+    });
+}
+
 function listenForGameOver() {
     if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
         showFinishedModal();
@@ -318,5 +355,3 @@ function listenForGameChoice() {
         showHome();
     });
 }
-
-showScoreGame();
