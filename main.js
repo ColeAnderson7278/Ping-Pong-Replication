@@ -254,31 +254,33 @@ function getUsers() {
 }
 
 function userValidation() {
-    var startButton = document.querySelector("#startGameButton");
-    var inputOne = document.querySelector("#playerOneSelect").value;
-    var inputTwo = document.querySelector("#playerTwoSelect").value;
     getUsers().then(function() {
         usernameList = [];
         for (var user of pageData.users) {
             usernameList.push(user.username);
         }
-        if (
-            usernameList.includes(inputOne) &&
-            usernameList.includes(inputTwo)
-        ) {
-            if (inputOne != inputTwo) {
-                if (
-                    inputOne != pageData.username &&
-                    inputTwo != pageData.username
-                ) {
-                    startButton.removeAttribute("disabled");
-                }
-            }
-        } else {
-            startButton.setAttribute("disabled", "disabled");
-        }
+        verifyUsers(usernameList);
     });
 }
+
+function verifyUsers(usernameList) {
+    var startButton = document.querySelector("#startGameButton");
+    var inputOne = document.querySelector("#playerOneSelect").value;
+    var inputTwo = document.querySelector("#playerTwoSelect").value;
+    if (usernameList.includes(inputOne) && usernameList.includes(inputTwo)) {
+        if (inputOne != inputTwo) {
+            if (
+                inputOne != pageData.username &&
+                inputTwo != pageData.username
+            ) {
+                startButton.removeAttribute("disabled");
+            }
+        }
+    } else {
+        startButton.setAttribute("disabled", "disabled");
+    }
+}
+
 function listenForGameOver() {
     if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
         showFinishedModal();
@@ -316,5 +318,3 @@ function listenForGameChoice() {
         showHome();
     });
 }
-
-showScoreGame();
