@@ -282,18 +282,39 @@ function userValidation() {
 function listenForGameOver() {
     if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
         showFinishedModal();
+        listenForGameChoice();
     }
 }
 
 function showFinishedModal() {
-    var NameOneContainer = document.querySelector("#playerOneName");
-    var NameTwoContainer = document.querySelector("#playerTwoName");
-    var ScoreOneContainer = document.querySelector("#playerOneScore");
-    var ScoreTwoContainer = document.querySelector("#playerTwoScore");
     var finishedModal = document.querySelector("#gameFinishedModal");
+    var NameOneContainer = finishedModal.querySelector("#playerOneName");
+    var NameTwoContainer = finishedModal.querySelector("#playerTwoName");
+    var ScoreOneContainer = finishedModal.querySelector("#playerOneScore");
+    var ScoreTwoContainer = finishedModal.querySelector("#playerTwoScore");
     finishedModal.style.display = "block";
     NameOneContainer.innerText = pageData.playerOneName;
     NameTwoContainer.innerText = pageData.playerTwoName;
     ScoreOneContainer.innerText = pageData.playerOneScore;
     ScoreTwoContainer.innerText = pageData.playerTwoScore;
 }
+
+function hideModal() {
+    var finishedModal = document.querySelector("#gameFinishedModal");
+    finishedModal.style.display = "none";
+}
+
+function listenForGameChoice() {
+    var submitButton = document.querySelector("#submitScore");
+    var cancelButton = document.querySelector("#cancelScore");
+    submitButton.addEventListener("click", function() {
+        hideModal();
+        showHome();
+    });
+    cancelButton.addEventListener("click", function() {
+        hideModal();
+        showHome();
+    });
+}
+
+showScoreGame();

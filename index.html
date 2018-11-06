@@ -99,7 +99,7 @@
                     <h3><i class="fas fa-long-arrow-alt-right"></i> {{buttonMessage}} <i class="fas fa-long-arrow-alt-left"></i></h3>
             </button>
         </div>
-        <div class="container">
+        <!-- <div class="container">
             <div class="card">
                 <div class="card-header card-color">
                     <h1 class="fancy-font text-center">
@@ -107,7 +107,7 @@
                     </h1>
                 </div>
             </div>
-        </div>
+        </div> -->
     </script>
 
     <script id="showGameSet" type="text/x-handlebars-template">
@@ -166,9 +166,13 @@
         </div>
     </script>
 
-    <div class="modal m-5 p-2 text-center" id="gameFinishedModal">
-        <h2>Game Finished</h2>
-        <div class="d-flex">
+    <div class="modal text-center" id="gameFinishedModal">
+        <div class="card-color">
+            <h1 class="fancy-font text-center">
+                Final Score
+            </h1>
+        </div>
+        <div class="d-flex justify-content-around p-4">
             <div>
                 <h3 id="playerOneName"></h3>
                 <h3 id="playerOneScore"></h3>
@@ -177,6 +181,10 @@
                 <h3 id="playerTwoName"></h3>
                 <h3 id="playerTwoScore"></h3>
             </div>
+        </div>
+        <div class="buttonContainer d-flex justify-content-around pt-5">
+            <button id="submitScore" type="button" class="btn color-button">Submit</button>
+            <button id="cancelScore" type="button" class="btn color-button">Cancel</button>
         </div>
     </div>
 
