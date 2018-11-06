@@ -5,8 +5,7 @@ var pageData = {
     playerTwoName: null,
     playerTwoScore: 0,
     token: null,
-    users: null,
-    usernames: null
+    users: null
 };
 
 function listenForSignUp() {
@@ -29,7 +28,7 @@ function showSignUpPage() {
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
     var button = document.querySelector("#signupButton");
-    singUpListen();
+    signUpListen();
     button.addEventListener("click", function(event) {
         event.preventDefault();
         onSignIn();
@@ -86,7 +85,7 @@ function onSignIn() {
                 pageData.token = newJson.token;
                 showHome();
             } else {
-                alert("Please check your inputs");
+                alert("This user already exists");
             }
         });
 }
@@ -122,8 +121,8 @@ function showHome() {
     var source = document.getElementById("showHome").innerHTML;
     var template = Handlebars.compile(source);
     content = template({
-        welcomeUserMessage: `Welcome ${pageData.username}!`,
-        buttonMessage: "Start A New Game",
+        welcomeUserMessage: `Welcome ${pageData.username} !`,
+        buttonMessage: "Score New Game",
         leaderBoardPlacement: "This is where the leaderboard goes!"
     });
     var place = document.querySelector("#script-placement");
@@ -194,26 +193,10 @@ function listenForPoint() {
     });
 }
 
-// function playerInputListen() {
-//     document.addEventListener("mouseover", playerInputCheck);
-// }
-
-// function playerInputCheck() {
-//     var playerOneInput = document.querySelector("#playerOneSelect").value;
-//     var playerTwoInput = document.querySelector("#playerTwoSelect").value;
-//     if (playerOneInput !== "" && playerTwoInput !== "") {
-//         document.querySelector("#startGameButton").removeAttribute("disabled");
-//     } else {
-//         document
-//             .querySelector("#startGameButton")
-//             .setAttribute("disabled", "disabled");
-//     }
-// }
-
-function singUpListen() {
+function signUpListen() {
     document
         .querySelector(".signupContainer")
-        .addEventListener("mouseover", signUpCheck);
+        .addEventListener("input", signUpCheck);
 }
 
 function signUpCheck() {
@@ -235,7 +218,7 @@ function signUpCheck() {
 function loginListen() {
     document
         .querySelector(".loginContainer")
-        .addEventListener("mouseover", loginCheck);
+        .addEventListener("input", loginCheck);
 }
 
 function loginCheck() {
