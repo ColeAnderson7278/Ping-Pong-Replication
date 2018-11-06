@@ -7,7 +7,7 @@ var pageData = {
     playerTwoScore: 0,
     playerTwoId: null,
     token: null,
-    users: null
+    points: []
 };
 
 function listenForSignUp() {
@@ -179,29 +179,14 @@ function showGamePlay() {
     var newGameButton = document.getElementById("startGameButton");
     newGameButton.addEventListener("click", function() {
         setPlayerNames();
-        getPlayerId(pageData.playerOneName, pageData.playerTwoName);
+        getPlayerId(pageData.playerOneName, pageData.playerTwoName).then(
+            function() {
+                getNewGame(userId[0], userId[1]);
+            }
+        );
+        console.log(pageData.gameId);
         showScoreGame();
     });
-}
-
-function getNewGame(IdOne, IdTwo) {
-    return fetch(`http://bcca-pingpong.herokuapp.com/api/new-game/`, {
-        method: "POST",
-        headers: {
-            Authorization: `Token ${pageData.token}`,
-            "Content-Type": "application/json; charset=utf8"
-        },
-        body: JSON.stringify({
-            player_1: IdOne,
-            player_2: IdTwo
-        })
-    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(obj) {
-            return (pageData.gameId = obj.id);
-        });
 }
 
 function listenForPlus() {
@@ -209,10 +194,12 @@ function listenForPlus() {
     var buttonTwo = document.querySelector("#playerTwoPlus");
     buttonOne.addEventListener("click", function() {
         pageData.playerOneScore = pageData.playerOneScore + 1;
+        addToPoints(pageData.playerOneName);
         showScoreGame();
     });
     buttonTwo.addEventListener("click", function() {
         pageData.playerTwoScore = pageData.playerTwoScore + 1;
+        addToPoints(pageData.playerTwoName);
         showScoreGame();
     });
 }
@@ -276,6 +263,54 @@ function getUsers() {
         });
 }
 
+function getPlayerId(nameOne, nameTwo) {
+    getUsers().then(function() {
+        userId = [];
+        for (var user of pageData.users) {
+            if (nameOne == user.username) {
+                pageData.playerOneId = user.id;
+                userId.push(user.id);
+            } else if (nameTwo == user.username) {
+                pageData.playerTwoId = user.id;
+                userId.push(user.id);
+            }
+        }
+    });
+}
+
+function getNewGame(IdOne, IdTwo) {
+    fetch(`http://bcca-pingpong.herokuapp.com/api/new-game/`, {
+        method: "POST",
+        headers: {
+            Authorization: `Token ${pageData.token}`,
+            "Content-Type": "application/json; charset=utf8"
+        },
+        body: JSON.stringify({
+            player_1: IdOne,
+            player_2: IdTwo
+        })
+    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(obj) {
+            pageData.gameId = obj.id;
+        });
+}
+
+// function finalizeGame(obj) {
+//     fetch(`http://bcca-pingpong..herokuapp.com/api/score-game/${obj.id}/`, {
+//         method: "POST",
+//         headers: {
+//             Authorization: `Token ${pageData.token}`,
+//             "Content-Type": "application/json; charset=utf8"
+//         },
+//         body: JSON.stringify({
+//             points: pageData.points
+//         })
+//     });
+// }
+
 function userValidation() {
     getUsers().then(function() {
         usernameList = [];
@@ -302,20 +337,6 @@ function verifyUsers(usernameList) {
     } else {
         startButton.setAttribute("disabled", "disabled");
     }
-}
-
-function getPlayerId(nameOne, nameTwo) {
-    getUsers().then(function() {
-        userId = [];
-        for (var user of pageData.users) {
-            if (nameOne == user.username) {
-                userId.push(user.id);
-            } else if (nameTwo == user.username) {
-                userId.push(user.id);
-            }
-        }
-        getNewGame(userId[0], userId[1]);
-    });
 }
 
 function listenForGameOver() {
@@ -354,4 +375,9 @@ function listenForGameChoice() {
         hideModal();
         showHome();
     });
+}
+
+function addToPoints(user) {
+    pageData.points.push(user);
+    console.log(pageData.points);
 }
