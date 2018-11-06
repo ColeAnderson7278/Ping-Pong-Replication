@@ -152,7 +152,10 @@
                         <h3>{{scoreMessage}}</h3>
                         <h3>{{playerOneScore}}</h3>
                     </div>
-                    <button id="playerOneButton" type="button" class="btn btn-block color-button">{{scoreButtonText}}</button>
+                    <div class="d-flex justify-content-around">
+                            <button id="playerOneMinus" type="button" class="btn color-button">{{minusButtonText}}</button>
+                        <button id="playerOnePlus" type="button" class="btn color-button">{{plusButtonText}}</button>
+                    </div>
                 </div>
                 <div id="playerTwoScore" class="playerScore">
                     <h2>{{playerTwo}}</h2>
@@ -160,7 +163,10 @@
                         <h3>{{scoreMessage}}</h3>
                         <h3>{{playerTwoScore}}</h3>
                     </div>
-                    <button id="playerTwoButton" type="button" class="btn btn-block color-button">{{scoreButtonText2}}</button>
+                    <div class="d-flex justify-content-around">
+                            <button id="playerTwoMinus" type="button" class="btn color-button">{{minusButtonText}}</button>
+                            <button id="playerTwoPlus" type="button" class="btn color-button">{{plusButtonText}}</button>
+                        </div>
                 </div>
             </div>
         </div>

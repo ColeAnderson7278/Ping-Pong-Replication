@@ -162,14 +162,14 @@ function showScoreGame() {
         scoreMessage: "Score:",
         playerOne: `${pageData.playerOneName}`,
         playerOneScore: `${pageData.playerOneScore}`,
-        scoreButtonText: "+1",
+        plusButtonText: "+1",
+        minusButtonText: "- 1",
         playerTwo: `${pageData.playerTwoName}`,
-        playerTwoScore: `${pageData.playerTwoScore}`,
-        scoreButtonText2: "+1"
+        playerTwoScore: `${pageData.playerTwoScore}`
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
-    listenForPoint();
+    listenForPlus();
     listenForGameOver();
 }
 
@@ -181,9 +181,9 @@ function showGamePlay() {
     });
 }
 
-function listenForPoint() {
-    var buttonOne = document.querySelector("#playerOneButton");
-    var buttonTwo = document.querySelector("#playerTwoButton");
+function listenForPlus() {
+    var buttonOne = document.querySelector("#playerOnePlus");
+    var buttonTwo = document.querySelector("#playerTwoPlus");
     buttonOne.addEventListener("click", function() {
         pageData.playerOneScore = pageData.playerOneScore + 1;
         showScoreGame();
@@ -318,3 +318,5 @@ function listenForGameChoice() {
         showHome();
     });
 }
+
+showScoreGame();
