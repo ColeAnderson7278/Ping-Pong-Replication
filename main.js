@@ -170,6 +170,7 @@ function showScoreGame() {
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
     listenForPoint();
+    listenForGameOver();
 }
 
 function showGamePlay() {
@@ -266,10 +267,33 @@ function userValidation() {
             usernameList.includes(inputTwo)
         ) {
             if (inputOne != inputTwo) {
-                startButton.removeAttribute("disabled");
+                if (
+                    inputOne != pageData.username &&
+                    inputTwo != pageData.username
+                ) {
+                    startButton.removeAttribute("disabled");
+                }
             }
         } else {
             startButton.setAttribute("disabled", "disabled");
         }
     });
+}
+function listenForGameOver() {
+    if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
+        showFinishedModal();
+    }
+}
+
+function showFinishedModal() {
+    var NameOneContainer = document.querySelector("#playerOneName");
+    var NameTwoContainer = document.querySelector("#playerTwoName");
+    var ScoreOneContainer = document.querySelector("#playerOneScore");
+    var ScoreTwoContainer = document.querySelector("#playerTwoScore");
+    var finishedModal = document.querySelector("#gameFinishedModal");
+    finishedModal.style.display = "block";
+    NameOneContainer.innerText = pageData.playerOneName;
+    NameTwoContainer.innerText = pageData.playerTwoName;
+    ScoreOneContainer.innerText = pageData.playerOneScore;
+    ScoreTwoContainer.innerText = pageData.playerTwoScore;
 }

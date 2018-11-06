@@ -26,6 +26,16 @@
     color: white;
 }
 
+.btn:hover {
+    background-color: rgb(211, 108, 117);
+    color: white;
+}
+
 .fancy-font {
     font-family: "Righteous", cursive;
+}
+
+.modal {
+    background: rgb(250, 250, 250);
+    border-radius: 3%;
 }

@@ -47,15 +47,15 @@
                 <h1 class="fancy-font">Log In</h1>
             </div>
             <div class="p-3">
-                    <div class="form-group ">
-                            <label class="fancy-font">{{username}}</label>
-                            <input type="text" class="form-control col-4" id="existingUsername" required>
-                        </div>
-                        <div class="form-group ">
-                            <label class="fancy-font">{{password}}</label>
-                            <input type="password" class="form-control col-4" id="existingPassword" required>
-                        </div>
-                        <button id="loginButton" type="submit" class="btn btn-success pt-2 fancy-font">{{buttonMessage}}</button>
+                 <div class="form-group ">
+                    <label class="fancy-font">{{username}}</label>
+                    <input type="text" class="form-control col-4" id="existingUsername" required>
+                </div>
+                <div class="form-group ">
+                    <label class="fancy-font">{{password}}</label>
+                    <input type="password" class="form-control col-4" id="existingPassword" required>
+                </div>
+                <button id="loginButton" type="submit" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
             </div>
         </form>
     </div>
@@ -68,19 +68,19 @@
                             <h1 class="fancy-font">Sign Up</h1>
                         </div>
                 <div class="p-3">
+                    <div class="form-group">
+                            <label class="fancy-font">{{username}}</label>
+                            <input type="text" class="form-control col-4" id="inputUsername" required>
+                        </div>
                         <div class="form-group">
-                                <label class="fancy-font">{{username}}</label>
-                                <input type="text" class="form-control col-4" id="inputUsername" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="fancy-font">{{password}}</label>
-                                <input type="password" class="form-control col-4" id="inputPassword" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="fancy-font">{{passwordConfirm}}</label>
-                                <input type="password" class="form-control col-4" id="inputPasswordRepeat" required>
-                            </div>
-                            <button id="signupButton" type="button" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
+                            <label class="fancy-font">{{password}}</label>
+                            <input type="password" class="form-control col-4" id="inputPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="fancy-font">{{passwordConfirm}}</label>
+                            <input type="password" class="form-control col-4" id="inputPasswordRepeat" required>
+                        </div>
+                        <button id="signupButton" type="button" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
                 </div>
             </form>
         </div>
@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="buttonContainer">
-                <button id="startGameButton" type="button" class="btn color-button">
+                <button id="startGameButton" type="button" class="btn color-button" disabled>
                     <h3 class="fancy-font">{{buttonMessage}}</h3>
                 </button>
             </div>
@@ -166,8 +166,19 @@
         </div>
     </script>
 
-
-
+    <div class="modal m-5 p-2 text-center" id="gameFinishedModal">
+        <h2>Game Finished</h2>
+        <div class="d-flex">
+            <div>
+                <h3 id="playerOneName"></h3>
+                <h3 id="playerOneScore"></h3>
+            </div>
+            <div>
+                <h3 id="playerTwoName"></h3>
+                <h3 id="playerTwoScore"></h3>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
