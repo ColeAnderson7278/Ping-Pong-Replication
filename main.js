@@ -179,12 +179,6 @@ function showGamePlay() {
     var newGameButton = document.getElementById("startGameButton");
     newGameButton.addEventListener("click", function() {
         setPlayerNames();
-        getPlayerId(pageData.playerOneName, pageData.playerTwoName).then(
-            function() {
-                getNewGame(userId[0], userId[1]);
-            }
-        );
-        console.log(pageData.gameId);
         showScoreGame();
     });
 }
@@ -268,13 +262,12 @@ function getPlayerId(nameOne, nameTwo) {
         userId = [];
         for (var user of pageData.users) {
             if (nameOne == user.username) {
-                pageData.playerOneId = user.id;
                 userId.push(user.id);
             } else if (nameTwo == user.username) {
-                pageData.playerTwoId = user.id;
                 userId.push(user.id);
             }
         }
+        getNewGame(userId[0], userId[1]);
     });
 }
 
@@ -298,18 +291,18 @@ function getNewGame(IdOne, IdTwo) {
         });
 }
 
-// function finalizeGame(obj) {
-//     fetch(`http://bcca-pingpong..herokuapp.com/api/score-game/${obj.id}/`, {
-//         method: "POST",
-//         headers: {
-//             Authorization: `Token ${pageData.token}`,
-//             "Content-Type": "application/json; charset=utf8"
-//         },
-//         body: JSON.stringify({
-//             points: pageData.points
-//         })
-//     });
-// }
+function finalizeGame(obj) {
+    fetch(`http://bcca-pingpong..herokuapp.com/api/score-game/${obj.id}/`, {
+        method: "POST",
+        headers: {
+            Authorization: `Token ${pageData.token}`,
+            "Content-Type": "application/json; charset=utf8"
+        },
+        body: JSON.stringify({
+            points: pageData.points
+        })
+    });
+}
 
 function userValidation() {
     getUsers().then(function() {

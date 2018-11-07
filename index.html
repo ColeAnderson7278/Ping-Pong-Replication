@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ping Pong Score</title>
+    <title>Ping Pong Pocket Ref</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -26,14 +26,14 @@
         </div>
         <div class="formLinkContainer container text-center pt-5">
             <a id="SignUpLink" class="formLink" href="#">
-                <button type="button" class="btn color-button">
+                <button id="submitButton" type="button" class="btn color-button">
                     <h1 class="fancy-font">Sign Up</h1>
                 </button>
             </a>
             <h1>Or</h1>
             <a id="LoginLink" class="formLink" href="#">
-                <button type="button" class="btn color-button">
-                    <h1 class="fancy-font">Log In</h1>
+                <button id="loginButton" type="button" class="btn color-button">
+                    <h1 class="fancy-font">Login</h1>
                 </button>
             </a>
         </div>
@@ -44,7 +44,7 @@
     <div class="loginContainer">
         <form method="POST">
             <div class="card-header card-color">
-                <h1 class="fancy-font">Log In</h1>
+                <h1 class="fancy-font">Login</h1>
             </div>
             <div class="p-3">
                  <div class="form-group ">
@@ -144,7 +144,6 @@
                         <h3>{{playerOneScore}}</h3>
                     </div>
                     <div class="d-flex justify-content-around">
-                            <!-- <button id="playerOneMinus" type="button" class="btn color-button">{{minusButtonText}}</button> -->
                         <button id="playerOnePlus" type="button" class="btn color-button">{{plusButtonText}}</button>
                     </div>
                 </div>
@@ -155,7 +154,6 @@
                         <h3>{{playerTwoScore}}</h3>
                     </div>
                     <div class="d-flex justify-content-around">
-                            <!-- <button id="playerTwoMinus" type="button" class="btn color-button">{{minusButtonText}}</button> -->
                             <button id="playerTwoPlus" type="button" class="btn color-button">{{plusButtonText}}</button>
                         </div>
                 </div>
