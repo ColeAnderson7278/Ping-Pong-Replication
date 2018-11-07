@@ -119,85 +119,6 @@ function onLogin() {
         });
 }
 
-function showHome() {
-    var source = document.getElementById("showHome").innerHTML;
-    var template = Handlebars.compile(source);
-    content = template({
-        welcomeUserMessage: `Welcome ${pageData.username} !`,
-        buttonMessage: "Score New Game",
-        leaderBoardPlacement: "This is where the leaderboard goes!"
-    });
-    var place = document.querySelector("#script-placement");
-    place.innerHTML = content;
-    showGameStart();
-}
-
-function showGameStart() {
-    var newGameButton = document.getElementById("startNewGame");
-    newGameButton.addEventListener("click", showSetGame);
-}
-
-function showSetGame() {
-    var source = document.getElementById("showGameSet").innerHTML;
-    var template = Handlebars.compile(source);
-    content = template({
-        setGameMessage: "Set up New Game",
-        ref: `${pageData.username}`,
-        playerOne: "Player 1:",
-        playerTwo: "Player 2:",
-        buttonMessage: "Start Game"
-    });
-    var place = document.querySelector("#script-placement");
-    place.innerHTML = content;
-    showGamePlay();
-    document
-        .querySelector(".setUpContainer")
-        .addEventListener("input", userValidation);
-}
-
-function showScoreGame() {
-    var source = document.getElementById("showScoreGame").innerHTML;
-    var template = Handlebars.compile(source);
-    var content = template({
-        setScoreGame: "Score Game",
-        ref: `${pageData.username}`,
-        scoreMessage: "Score:",
-        playerOne: `${pageData.playerOneName}`,
-        playerOneScore: `${pageData.playerOneScore}`,
-        plusButtonText: "+1",
-        minusButtonText: "- 1",
-        playerTwo: `${pageData.playerTwoName}`,
-        playerTwoScore: `${pageData.playerTwoScore}`
-    });
-    var place = document.querySelector("#script-placement");
-    place.innerHTML = content;
-    listenForPlus();
-    listenForGameOver();
-}
-
-function showGamePlay() {
-    var newGameButton = document.getElementById("startGameButton");
-    newGameButton.addEventListener("click", function() {
-        setPlayerNames();
-        showScoreGame();
-    });
-}
-
-function listenForPlus() {
-    var buttonOne = document.querySelector("#playerOnePlus");
-    var buttonTwo = document.querySelector("#playerTwoPlus");
-    buttonOne.addEventListener("click", function() {
-        pageData.playerOneScore = pageData.playerOneScore + 1;
-        addToPoints(pageData.playerOneName);
-        showScoreGame();
-    });
-    buttonTwo.addEventListener("click", function() {
-        pageData.playerTwoScore = pageData.playerTwoScore + 1;
-        addToPoints(pageData.playerTwoName);
-        showScoreGame();
-    });
-}
-
 function signUpListen() {
     document
         .querySelector(".signupContainer")
@@ -237,6 +158,84 @@ function loginCheck() {
     }
 }
 
+function showHome() {
+    var source = document.getElementById("showHome").innerHTML;
+    var template = Handlebars.compile(source);
+    content = template({
+        welcomeUserMessage: `Welcome ${pageData.username} !`,
+        buttonMessage: "Score New Game",
+        leaderBoardPlacement: "This is where the leaderboard goes!"
+    });
+    var place = document.querySelector("#script-placement");
+    place.innerHTML = content;
+    showGameStart();
+}
+
+function showGameStart() {
+    var newGameButton = document.getElementById("startNewGame");
+    newGameButton.addEventListener("click", showSetGame);
+}
+
+function showSetGame() {
+    var source = document.getElementById("showGameSet").innerHTML;
+    var template = Handlebars.compile(source);
+    content = template({
+        setGameMessage: "Set up New Game",
+        ref: `${pageData.username}`,
+        playerOne: "Player 1:",
+        playerTwo: "Player 2:",
+        buttonMessage: "Start Game"
+    });
+    var place = document.querySelector("#script-placement");
+    place.innerHTML = content;
+    document
+        .querySelector(".setUpContainer")
+        .addEventListener("input", userValidation);
+    showGamePlay();
+}
+
+function showGamePlay() {
+    var newGameButton = document.getElementById("startGameButton");
+    newGameButton.addEventListener("click", function() {
+        setPlayerNames();
+        showScoreGame();
+    });
+}
+
+function showScoreGame() {
+    var source = document.getElementById("showScoreGame").innerHTML;
+    var template = Handlebars.compile(source);
+    var content = template({
+        setScoreGame: "Score Game",
+        ref: `${pageData.username}`,
+        scoreMessage: "Score:",
+        playerOne: `${pageData.playerOneName}`,
+        playerOneScore: `${pageData.playerOneScore}`,
+        plusButtonText: "+1",
+        minusButtonText: "- 1",
+        playerTwo: `${pageData.playerTwoName}`,
+        playerTwoScore: `${pageData.playerTwoScore}`
+    });
+    var place = document.querySelector("#script-placement");
+    place.innerHTML = content;
+    getPlayerId(pageData.playerOneName, pageData.playerTwoName);
+}
+
+function listenForPlus(idOne, idTwo, gameId) {
+    var buttonOne = document.querySelector("#playerOnePlus");
+    var buttonTwo = document.querySelector("#playerTwoPlus");
+    buttonOne.addEventListener("click", function() {
+        listenForGameOver(gameId);
+        pageData.playerOneScore = pageData.playerOneScore + 1;
+        addToPoints(idOne);
+    });
+    buttonTwo.addEventListener("click", function() {
+        listenForGameOver(gameId);
+        pageData.playerTwoScore = pageData.playerTwoScore + 1;
+        addToPoints(idTwo);
+    });
+}
+
 function setPlayerNames() {
     pageData.playerOneName = document.querySelector("#playerOneSelect").value;
     pageData.playerTwoName = document.querySelector("#playerTwoSelect").value;
@@ -259,15 +258,14 @@ function getUsers() {
 
 function getPlayerId(nameOne, nameTwo) {
     getUsers().then(function() {
-        userId = [];
         for (var user of pageData.users) {
             if (nameOne == user.username) {
-                userId.push(user.id);
+                pageData.playerOneId = user.id;
             } else if (nameTwo == user.username) {
-                userId.push(user.id);
+                pageData.playerTwoId = user.id;
             }
         }
-        getNewGame(userId[0], userId[1]);
+        getNewGame(pageData.playerOneId, pageData.playerTwoId);
     });
 }
 
@@ -287,13 +285,13 @@ function getNewGame(IdOne, IdTwo) {
             return response.json();
         })
         .then(function(obj) {
-            pageData.gameId = obj.id;
+            listenForPlus(IdOne, IdTwo, obj.id);
         });
 }
 
-function finalizeGame(obj) {
-    fetch(`http://bcca-pingpong..herokuapp.com/api/score-game/${obj.id}/`, {
-        method: "POST",
+function finalizeGame(gameId) {
+    fetch(`http://bcca-pingpong.herokuapp.com/api/score-game/${gameId}/`, {
+        method: "PUT",
         headers: {
             Authorization: `Token ${pageData.token}`,
             "Content-Type": "application/json; charset=utf8"
@@ -301,7 +299,13 @@ function finalizeGame(obj) {
         body: JSON.stringify({
             points: pageData.points
         })
-    });
+    })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(obj => {
+            console.log(obj);
+        });
 }
 
 function userValidation() {
@@ -320,10 +324,7 @@ function verifyUsers(usernameList) {
     var inputTwo = document.querySelector("#playerTwoSelect").value;
     if (usernameList.includes(inputOne) && usernameList.includes(inputTwo)) {
         if (inputOne != inputTwo) {
-            if (
-                inputOne != pageData.username &&
-                inputTwo != pageData.username
-            ) {
+            {
                 startButton.removeAttribute("disabled");
             }
         }
@@ -332,11 +333,21 @@ function verifyUsers(usernameList) {
     }
 }
 
-function listenForGameOver() {
-    if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
-        showFinishedModal();
-        listenForGameChoice();
-    }
+function listenForGameOver(gameId) {
+    var buttonOne = document.querySelector("#playerOnePlus");
+    var buttonTwo = document.querySelector("#playerTwoPlus");
+    buttonOne.addEventListener("click", function() {
+        if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
+            showFinishedModal();
+            listenForGameChoice(gameId);
+        }
+    });
+    buttonTwo.addEventListener("click", function() {
+        if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
+            showFinishedModal(gameId);
+            listenForGameChoice(gameId);
+        }
+    });
 }
 
 function showFinishedModal() {
@@ -357,20 +368,18 @@ function hideModal() {
     finishedModal.style.display = "none";
 }
 
-function listenForGameChoice() {
+function listenForGameChoice(gameId) {
     var submitButton = document.querySelector("#submitScore");
     var cancelButton = document.querySelector("#cancelScore");
     submitButton.addEventListener("click", function() {
+        finalizeGame(gameId);
         hideModal();
-        showHome();
     });
     cancelButton.addEventListener("click", function() {
         hideModal();
-        showHome();
     });
 }
 
 function addToPoints(user) {
     pageData.points.push(user);
-    console.log(pageData.points);
 }
