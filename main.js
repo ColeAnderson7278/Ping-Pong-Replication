@@ -162,7 +162,7 @@ function showHome() {
     var source = document.getElementById("showHome").innerHTML;
     var template = Handlebars.compile(source);
     content = template({
-        welcomeUserMessage: `Welcome ${pageData.username} !`,
+        welcomeUserMessage: `Welcome ${pageData.username}`,
         scoreButtonMessage: "Score New Game",
         logOutMessage: "Log Out"
     });
