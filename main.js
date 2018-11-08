@@ -162,17 +162,30 @@ function showHome() {
     var template = Handlebars.compile(source);
     content = template({
         welcomeUserMessage: `Welcome ${pageData.username} !`,
-        buttonMessage: "Score New Game",
-        leaderBoardPlacement: "This is where the leaderboard goes!"
+        scoreButtonMessage: "Score New Game",
+        logOutMessage: "Log Out"
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
+    listenForLogOut();
     showGameStart();
 }
 
 function showGameStart() {
     var newGameButton = document.getElementById("startNewGame");
     newGameButton.addEventListener("click", showSetGame);
+}
+
+function listenForLogOut() {
+    var logOutButton = document.querySelector("#logOutButton");
+    logOutButton.addEventListener("click", showLogOutMessage);
+}
+
+function showLogOutMessage() {
+    var choice = confirm("Are you sure you want to log out?");
+    if (choice) {
+        document.location.reload();
+    }
 }
 
 function showSetGame() {
@@ -211,7 +224,6 @@ function showScoreGame() {
         playerOne: `${pageData.playerOneName}`,
         playerOneScore: `${pageData.playerOneScore}`,
         plusButtonText: "+1",
-        minusButtonText: "- 1",
         playerTwo: `${pageData.playerTwoName}`,
         playerTwoScore: `${pageData.playerTwoScore}`
     });

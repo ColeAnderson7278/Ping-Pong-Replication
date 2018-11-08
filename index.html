@@ -1,197 +1,228 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Ping Pong Pocket Ref</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+            integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://fonts.googleapis.com/css?family=Righteous"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ping Pong Pocket Ref</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
-        crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-</head>
-
-<body>
-    <div id="script-placement">
-        <div class="card text-center">
-            <div class="card-header card-color">
-                <h1 class="fancy-font">
-                    <i class="fas fa-table-tennis"></i> Ping Pong Pocket Ref
-                    <i class="fas fa-table-tennis"></i>
-                </h1>
-            </div>
-        </div>
-        <div class="formLinkContainer container text-center pt-5">
-            <a id="SignUpLink" class="formLink" href="#">
-                <button id="submitButton" type="button" class="btn color-button">
-                    <h1 class="fancy-font">Sign Up</h1>
-                </button>
-            </a>
-            <h1>Or</h1>
-            <a id="LoginLink" class="formLink" href="#">
-                <button id="loginButton" type="button" class="btn color-button">
-                    <h1 class="fancy-font">Login</h1>
-                </button>
-            </a>
-        </div>
-    </div>
-
-
-    <script id="showLogin" type="text/x-handlebars-template">
-    <div class="loginContainer">
-        <form method="POST">
-            <div class="card-header card-color">
-                <h1 class="fancy-font">Login</h1>
-            </div>
-            <div class="p-3">
-                 <div class="form-group ">
-                    <label class="fancy-font">{{username}}</label>
-                    <input type="text" class="form-control col-4" id="existingUsername" required>
-                </div>
-                <div class="form-group ">
-                    <label class="fancy-font">{{password}}</label>
-                    <input type="password" class="form-control col-4" id="existingPassword" required>
-                </div>
-                <button id="loginButton" type="submit" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
-            </div>
-        </form>
-    </div>
-    </script>
-
-    <script id="showSignUp" type="text/x-handlebars-template">
-        <div class="signupContainer">
-            <form method="POST">
-                    <div class="card-header card-color">
-                            <h1 class="fancy-font">Sign Up</h1>
-                        </div>
-                <div class="p-3">
-                    <div class="form-group">
-                            <label class="fancy-font">{{username}}</label>
-                            <input type="text" class="form-control col-4" id="inputUsername" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="fancy-font">{{password}}</label>
-                            <input type="password" class="form-control col-4" id="inputPassword" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="fancy-font">{{passwordConfirm}}</label>
-                            <input type="password" class="form-control col-4" id="inputPasswordRepeat" required>
-                        </div>
-                        <button id="signupButton" type="button" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
-                </div>
-            </form>
-        </div>
-    </script>
-
-    <script id="showHome" type="text/x-handlebars-template">
-        <div class="text-center">
+    <body>
+        <div id="script-placement">
+            <div class="card text-center">
                 <div class="card-header card-color">
                     <h1 class="fancy-font">
-                        {{welcomeUserMessage}}
+                        <i class="fas fa-table-tennis"></i> Ping Pong Pocket Ref
+                        <i class="fas fa-table-tennis"></i>
                     </h1>
                 </div>
-        </div>
-        <div class="text-center pt-3 pb-3 p-1">
-            <button id="startNewGame" type="button" class="btn fancy-font">
-                    <h3><i class="fas fa-long-arrow-alt-right"></i> {{buttonMessage}} <i class="fas fa-long-arrow-alt-left"></i></h3>
-            </button>
-        </div>
-    </script>
-
-    <script id="showGameSet" type="text/x-handlebars-template">
-        <div class="setUpContainer pb-4 text-center">
-                <div class="card-header card-color">
-                    <h2 class="fancy-font text-center">
-                        {{setGameMessage}}
-                    </h2>
-                    <h1 class="fancy-font text-center">Ref: {{ref}}</h1>
-                </div>
-            <div class="playerContainer d-flex p-2 justify-content-center ">
-                <div id="playerOneInput" class="playerSelect pr-2">
-                    <label for="playerOne">{{playerOne}}</label>
-                    <input type="text" class="form-control" id="playerOneSelect">
-                </div>
-                <div id="playerTwoInput" class="playerSelect pb-4">
-                        <label for="playerOne">{{playerTwo}}</label>
-                        <input type="text" class="form-control" id="playerTwoSelect">
-                </div>
             </div>
-            <div class="buttonContainer">
-                <button id="startGameButton" type="button" class="btn color-button" disabled>
-                    <h3 class="fancy-font">{{buttonMessage}}</h3>
+            <div class="formLinkContainer container text-center pt-5">
+                <a id="SignUpLink" class="formLink" href="#">
+                    <button
+                        id="submitButton"
+                        type="button"
+                        class="btn color-button"
+                    >
+                        <h1 class="fancy-font">Sign Up</h1>
+                    </button>
+                </a>
+                <h1>Or</h1>
+                <a id="LoginLink" class="formLink" href="#">
+                    <button
+                        id="loginButton"
+                        type="button"
+                        class="btn color-button"
+                    >
+                        <h1 class="fancy-font">Login</h1>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <script id="showLogin" type="text/x-handlebars-template">
+            <div class="loginContainer">
+                <form method="POST">
+                    <div class="card-header card-color">
+                        <h1 class="fancy-font">Login</h1>
+                    </div>
+                    <div class="p-3">
+                         <div class="form-group ">
+                            <label class="fancy-font">{{username}}</label>
+                            <input type="text" class="form-control col-4" id="existingUsername" required>
+                        </div>
+                        <div class="form-group ">
+                            <label class="fancy-font">{{password}}</label>
+                            <input type="password" class="form-control col-4" id="existingPassword" required>
+                        </div>
+                        <button id="loginButton" type="submit" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
+                    </div>
+                </form>
+            </div>
+        </script>
+
+        <script id="showSignUp" type="text/x-handlebars-template">
+            <div class="signupContainer">
+                <form method="POST">
+                        <div class="card-header card-color">
+                                <h1 class="fancy-font">Sign Up</h1>
+                            </div>
+                    <div class="p-3">
+                        <div class="form-group">
+                                <label class="fancy-font">{{username}}</label>
+                                <input type="text" class="form-control col-4" id="inputUsername" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="fancy-font">{{password}}</label>
+                                <input type="password" class="form-control col-4" id="inputPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="fancy-font">{{passwordConfirm}}</label>
+                                <input type="password" class="form-control col-4" id="inputPasswordRepeat" required>
+                            </div>
+                            <button id="signupButton" type="button" class="btn pt-2 fancy-font">{{buttonMessage}}</button>
+                    </div>
+                </form>
+            </div>
+        </script>
+
+        <script id="showHome" type="text/x-handlebars-template">
+            <div class="text-center">
+                    <div class="card-header card-color">
+                        <h1 class="fancy-font">
+                            {{welcomeUserMessage}}
+                        </h1>
+                    </div>
+            </div>
+            <div class="text-center pt-3 pb-3 p-1">
+                <button id="startNewGame" type="button" class="btn fancy-font">
+                        <h3><i class="fas fa-long-arrow-alt-right"></i> {{scoreButtonMessage}} <i class="fas fa-long-arrow-alt-left"></i></h3>
                 </button>
             </div>
-                
+            <div class="text-center pt-3 pb-3 p-1">
+                <button id="logOutButton" type="button" class="btn fancy-font">
+                        <h3><i class="fas fa-long-arrow-alt-right"></i> {{logOutMessage}} <i class="fas fa-long-arrow-alt-left"></i></h3>
+                </button>
             </div>
-    </script>
+        </script>
 
-    <script id="showScoreGame" type="text/x-handlebars-template">
-        <div class="text-center">
-                <div class="card-header card-color">
-                    <h1 class="fancy-font text-center">
-                        {{setScoreGame}}
-                    </h1>
-                    <h1 class="fancy-font text-center">Ref: {{ref}}</h1>
+        <script id="showGameSet" type="text/x-handlebars-template">
+            <div class="setUpContainer pb-4 text-center">
+                    <div class="card-header card-color">
+                        <h2 class="fancy-font text-center">
+                            {{setGameMessage}}
+                        </h2>
+                        <h1 class="fancy-font text-center">Ref: {{ref}}</h1>
+                    </div>
+                <div class="playerContainer d-flex p-2 justify-content-center ">
+                    <div id="playerOneInput" class="playerSelect pr-2">
+                        <label for="playerOne">{{playerOne}}</label>
+                        <input type="text" class="form-control" id="playerOneSelect">
+                    </div>
+                    <div id="playerTwoInput" class="playerSelect pb-4">
+                            <label for="playerOne">{{playerTwo}}</label>
+                            <input type="text" class="form-control" id="playerTwoSelect">
+                    </div>
                 </div>
-            <div class="playerContainer d-flex pt-5 justify-content-around">
-                <div id="playerOneScore" class="playerScore">
-                    <h2>{{playerOne}}</h2>
-                    <div class="d-flex">
-                        <h3>{{scoreMessage}}</h3>
-                        <!-- <h3>{{playerOneScore}}</h3> -->
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <button id="playerOnePlus" type="button" class="btn color-button">{{plusButtonText}}</button>
-                    </div>
+                <div class="buttonContainer">
+                    <button id="startGameButton" type="button" class="btn color-button" disabled>
+                        <h3 class="fancy-font">{{buttonMessage}}</h3>
+                    </button>
                 </div>
-                <div id="playerTwoScore" class="playerScore">
-                    <h2>{{playerTwo}}</h2>
-                    <div class="d-flex">
-                        <h3>{{scoreMessage}}</h3>
-                        <!-- <h3>{{playerTwoScore}}</h3> -->
+
+                </div>
+        </script>
+
+        <script id="showScoreGame" type="text/x-handlebars-template">
+            <div class="text-center">
+                    <div class="card-header card-color">
+                        <h1 class="fancy-font text-center">
+                            {{setScoreGame}}
+                        </h1>
+                        <h1 class="fancy-font text-center">Ref: {{ref}}</h1>
                     </div>
-                    <div class="d-flex justify-content-around">
-                            <button id="playerTwoPlus" type="button" class="btn color-button">{{plusButtonText}}</button>
+                <div class="playerContainer d-flex pt-5 justify-content-around">
+                    <div id="playerOneScore" class="playerScore">
+                        <h2>{{playerOne}}</h2>
+                        <div class="d-flex">
+                            <h3>{{scoreMessage}}</h3>
+                            <!-- <h3>{{playerOneScore}}</h3> -->
                         </div>
+                        <div class="d-flex justify-content-around">
+                            <button id="playerOnePlus" type="button" class="btn color-button">{{plusButtonText}}</button>
+                        </div>
+                    </div>
+                    <div id="playerTwoScore" class="playerScore">
+                        <h2>{{playerTwo}}</h2>
+                        <div class="d-flex">
+                            <h3>{{scoreMessage}}</h3>
+                            <!-- <h3>{{playerTwoScore}}</h3> -->
+                        </div>
+                        <div class="d-flex justify-content-around">
+                                <button id="playerTwoPlus" type="button" class="btn color-button">{{plusButtonText}}</button>
+                            </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </script>
+        </script>
 
-    <div class="modal text-center" id="gameFinishedModal">
-        <div class="card-color">
-            <h1 class="fancy-font text-center">
-                Final Score
-            </h1>
-        </div>
-        <div class="d-flex justify-content-around p-4">
-            <div>
-                <h3 id="playerOneName"></h3>
-                <h3 id="playerOneScore"></h3>
+        <div class="modal text-center" id="gameFinishedModal">
+            <div class="card-color">
+                <h1 class="fancy-font text-center">Final Score</h1>
             </div>
-            <div>
-                <h3 id="playerTwoName"></h3>
-                <h3 id="playerTwoScore"></h3>
+            <div class="d-flex justify-content-around p-4">
+                <div>
+                    <h3 id="playerOneName"></h3>
+                    <h3 id="playerOneScore"></h3>
+                </div>
+                <div>
+                    <h3 id="playerTwoName"></h3>
+                    <h3 id="playerTwoScore"></h3>
+                </div>
+            </div>
+            <div class="buttonContainer d-flex justify-content-around pt-5">
+                <button id="submitScore" type="button" class="btn color-button">
+                    Submit
+                </button>
+                <button id="cancelScore" type="button" class="btn color-button">
+                    Cancel
+                </button>
             </div>
         </div>
-        <div class="buttonContainer d-flex justify-content-around pt-5">
-            <button id="submitScore" type="button" class="btn color-button">Submit</button>
-            <button id="cancelScore" type="button" class="btn color-button">Cancel</button>
-        </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-    <script src="main.js"></script>
-
-</body>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"
+        ></script>
+        <script src="main.js"></script>
+    </body>
 </html>
