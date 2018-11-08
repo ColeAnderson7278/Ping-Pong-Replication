@@ -125,7 +125,7 @@
         </script>
 
         <script id="showGameSet" type="text/x-handlebars-template">
-            <div class="setUpContainer pb-4 text-center">
+            <div class="setUpContainer fancy-font pb-4 text-center">
                     <div class="card-header card-color">
                         <h2 class="fancy-font text-center">
                             {{setGameMessage}}
@@ -143,6 +143,7 @@
                     </div>
                 </div>
                 <div class="pb-5">
+                    <h4 for="maxScore">Set Max Score:</h4>
                     <input type="number" id="maxScoreInput" step="1" value="10" min="1" required>
                 </div>
                 <div class="buttonContainer">
@@ -191,7 +192,7 @@
             </div>
         </script>
 
-        <div class="modal text-center" id="gameFinishedModal">
+        <div class="modal text-center fancy-font" id="gameFinishedModal">
             <div class="card-color">
                 <h1 class="fancy-font text-center">Final Score</h1>
             </div>

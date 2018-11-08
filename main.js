@@ -241,16 +241,16 @@ function listenForPlus(idOne, idTwo, gameId) {
     var buttonOne = document.querySelector("#playerOnePlus");
     var buttonTwo = document.querySelector("#playerTwoPlus");
     buttonOne.addEventListener("click", function() {
-        listenForGameOver(gameId);
         pageData.playerOneScore = pageData.playerOneScore + 1;
         addToPoints(idOne);
         showScoreBoard();
+        listenForGameOver(gameId);
     });
     buttonTwo.addEventListener("click", function() {
-        listenForGameOver(gameId);
         pageData.playerTwoScore = pageData.playerTwoScore + 1;
         addToPoints(idTwo);
         showScoreBoard();
+        listenForGameOver(gameId);
     });
 }
 
@@ -349,8 +349,8 @@ function verifyUsers(usernameList) {
 
 function listenForGameOver(gameId) {
     if (
-        pageData.playerOneScore === pageData.maxScore ||
-        pageData.playerTwoScore === pageData.maxScore
+        pageData.playerOneScore >= pageData.maxScore ||
+        pageData.playerTwoScore >= pageData.maxScore
     ) {
         showFinishedModal();
         listenForGameChoice(gameId);
