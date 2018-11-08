@@ -191,7 +191,7 @@ function showLogOutMessage() {
 function showSetGame() {
     var source = document.getElementById("showGameSet").innerHTML;
     var template = Handlebars.compile(source);
-    content = template({
+    var content = template({
         setGameMessage: "Set up New Game",
         ref: `${pageData.username}`,
         playerOne: "Player 1:",
@@ -218,9 +218,6 @@ function showScoreGame() {
     var source = document.getElementById("showScoreGame").innerHTML;
     var template = Handlebars.compile(source);
     var content = template({
-        setScoreGame: "Score Game",
-        ref: `${pageData.username}`,
-        scoreMessage: "Score:",
         playerOne: `${pageData.playerOneName}`,
         playerOneScore: `${pageData.playerOneScore}`,
         plusButtonText: "+1",
@@ -229,6 +226,7 @@ function showScoreGame() {
     });
     var place = document.querySelector("#script-placement");
     place.innerHTML = content;
+    showScoreBoard();
     getPlayerId(pageData.playerOneName, pageData.playerTwoName);
 }
 
@@ -239,11 +237,13 @@ function listenForPlus(idOne, idTwo, gameId) {
         listenForGameOver(gameId);
         pageData.playerOneScore = pageData.playerOneScore + 1;
         addToPoints(idOne);
+        showScoreBoard();
     });
     buttonTwo.addEventListener("click", function() {
         listenForGameOver(gameId);
         pageData.playerTwoScore = pageData.playerTwoScore + 1;
         addToPoints(idTwo);
+        showScoreBoard();
     });
 }
 
@@ -390,9 +390,24 @@ function addToPoints(user) {
 }
 
 function refreshInfo() {
+    var scoreBoard = (document.querySelector("#score-script").innerHTML = "");
     pageData.playerOneName = null;
     pageData.playerOneScore = 0;
     pageData.playerTwoName = null;
     pageData.playerTwoScore = 0;
     pageData.points = [];
+}
+
+function showScoreBoard() {
+    var source = document.getElementById("showScoreBoard").innerHTML;
+    var template = Handlebars.compile(source);
+    var content = template({
+        scoreMessage: "Score Board",
+        playerOneName: pageData.playerOneName,
+        playerTwoName: pageData.playerTwoName,
+        playerOneScore: pageData.playerOneScore,
+        playerTwoScore: pageData.playerTwoScore
+    });
+    var place = document.querySelector("#score-script");
+    place.innerHTML = content;
 }

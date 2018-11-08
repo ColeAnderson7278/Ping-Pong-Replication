@@ -25,6 +25,7 @@
     </head>
 
     <body>
+        <div id="score-script"></div>
         <div id="script-placement">
             <div class="card text-center">
                 <div class="card-header card-color">
@@ -106,9 +107,9 @@
         <script id="showHome" type="text/x-handlebars-template">
             <div class="text-center">
                     <div class="card-header card-color">
-                        <h1 class="fancy-font">
+                        <h2 class="fancy-font">
                             {{welcomeUserMessage}}
-                        </h1>
+                        </h2>
                     </div>
             </div>
             <div class="text-center pt-3 pb-3 p-1">
@@ -152,32 +153,36 @@
 
         <script id="showScoreGame" type="text/x-handlebars-template">
             <div class="text-center">
-                    <div class="card-header card-color">
-                        <h1 class="fancy-font text-center">
-                            {{setScoreGame}}
-                        </h1>
-                        <h1 class="fancy-font text-center">Ref: {{ref}}</h1>
-                    </div>
                 <div class="playerContainer d-flex pt-5 justify-content-around">
                     <div id="playerOneScore" class="playerScore">
                         <h2>{{playerOne}}</h2>
-                        <div class="d-flex">
-                            <h3>{{scoreMessage}}</h3>
-                            <!-- <h3>{{playerOneScore}}</h3> -->
-                        </div>
                         <div class="d-flex justify-content-around">
                             <button id="playerOnePlus" type="button" class="btn color-button">{{plusButtonText}}</button>
                         </div>
                     </div>
                     <div id="playerTwoScore" class="playerScore">
                         <h2>{{playerTwo}}</h2>
-                        <div class="d-flex">
-                            <h3>{{scoreMessage}}</h3>
-                            <!-- <h3>{{playerTwoScore}}</h3> -->
-                        </div>
                         <div class="d-flex justify-content-around">
                                 <button id="playerTwoPlus" type="button" class="btn color-button">{{plusButtonText}}</button>
                             </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script id="showScoreBoard" type="text/x-handlebars-template">
+            <div class="scoreContainer text-center card-color fancy-font">
+                <div>
+                    <h3>{{scoreMessage}}</h3>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <div>
+                        <h4>{{playerOneName}}</h4>
+                        <h4>{{playerOneScore}}</h4>
+                    </div>
+                    <div>
+                        <h4>{{playerTwoName}}</h4>
+                        <h4>{{playerTwoScore}}</h4>
                     </div>
                 </div>
             </div>
