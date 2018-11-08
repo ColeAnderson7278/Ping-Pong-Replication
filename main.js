@@ -6,6 +6,7 @@ var pageData = {
     playerTwoName: null,
     playerTwoScore: 0,
     playerTwoId: null,
+    maxScore: null,
     points: []
 };
 
@@ -209,9 +210,15 @@ function showSetGame() {
 function showGamePlay() {
     var newGameButton = document.getElementById("startGameButton");
     newGameButton.addEventListener("click", function() {
+        setMaxScore();
         setPlayerNames();
         showScoreGame();
     });
+}
+
+function setMaxScore() {
+    var score = document.querySelector("#maxScoreInput").value;
+    pageData.maxScore = Number(score);
 }
 
 function showScoreGame() {
@@ -310,13 +317,9 @@ function finalizeGame(gameId) {
         body: JSON.stringify({
             points: pageData.points
         })
-    })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(obj => {
-            console.log(obj);
-        });
+    }).then(function(response) {
+        return response.json();
+    });
 }
 
 function userValidation() {
@@ -345,7 +348,10 @@ function verifyUsers(usernameList) {
 }
 
 function listenForGameOver(gameId) {
-    if (pageData.playerOneScore === 10 || pageData.playerTwoScore === 10) {
+    if (
+        pageData.playerOneScore === pageData.maxScore ||
+        pageData.playerTwoScore === pageData.maxScore
+    ) {
         showFinishedModal();
         listenForGameChoice(gameId);
     }
@@ -390,12 +396,12 @@ function addToPoints(user) {
 }
 
 function refreshInfo() {
-    var scoreBoard = (document.querySelector("#score-script").innerHTML = "");
+    document.querySelector("#score-script").innerHTML = "";
     pageData.playerOneName = null;
     pageData.playerOneScore = 0;
     pageData.playerTwoName = null;
     pageData.playerTwoScore = 0;
-    pageData.points = [];
+    (pageData.maxScore = null), (pageData.points = []);
 }
 
 function showScoreBoard() {
