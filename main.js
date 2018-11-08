@@ -6,7 +6,6 @@ var pageData = {
     playerTwoName: null,
     playerTwoScore: 0,
     playerTwoId: null,
-    token: null,
     points: []
 };
 
@@ -334,20 +333,10 @@ function verifyUsers(usernameList) {
 }
 
 function listenForGameOver(gameId) {
-    var buttonOne = document.querySelector("#playerOnePlus");
-    var buttonTwo = document.querySelector("#playerTwoPlus");
-    buttonOne.addEventListener("click", function() {
-        if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
-            showFinishedModal();
-            listenForGameChoice(gameId);
-        }
-    });
-    buttonTwo.addEventListener("click", function() {
-        if (pageData.playerOneScore >= 10 || pageData.playerTwoScore >= 10) {
-            showFinishedModal(gameId);
-            listenForGameChoice(gameId);
-        }
-    });
+    if (pageData.playerOneScore === 10 || pageData.playerTwoScore === 10) {
+        showFinishedModal();
+        listenForGameChoice(gameId);
+    }
 }
 
 function showFinishedModal() {
@@ -374,12 +363,24 @@ function listenForGameChoice(gameId) {
     submitButton.addEventListener("click", function() {
         finalizeGame(gameId);
         hideModal();
+        refreshInfo();
+        showHome();
     });
     cancelButton.addEventListener("click", function() {
         hideModal();
+        refreshInfo();
+        showHome();
     });
 }
 
 function addToPoints(user) {
     pageData.points.push(user);
+}
+
+function refreshInfo() {
+    pageData.playerOneName = null;
+    pageData.playerOneScore = 0;
+    pageData.playerTwoName = null;
+    pageData.playerTwoScore = 0;
+    pageData.points = [];
 }
